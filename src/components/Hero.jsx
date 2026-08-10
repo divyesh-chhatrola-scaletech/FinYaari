@@ -433,22 +433,6 @@ export default function Hero() {
         <div className="grid items-center lg:grid-cols-[1fr_1fr] lg:gap-4 xl:gap-8">
           {/* ================= LEFT CONTENT ================= */}
           <div className="relative z-20 max-w-2xl pt-10 pb-16 lg:py-0">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-white/60 py-1.5 pl-1.5 pr-4 shadow-sm backdrop-blur-md"
-            >
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/15 text-primary">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-70" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
-                </span>
-              </span>
-              <span className="text-[13px] font-semibold text-dark/80">
-                FinYaari — Your Personal Finance Friend
-              </span>
-            </motion.div>
 
             <motion.h1
               initial={{ opacity: 0, y: 24 }}

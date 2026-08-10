@@ -41,6 +41,7 @@ export default function Footer() {
           <div className="max-w-sm">
             <div className="flex items-center gap-2.5">
               <img src="/logo-dark.svg" alt="FinYaari" className="h-[4.5rem] w-auto" />
+            </div>
             <p className="mt-4 text-[15px] font-medium leading-relaxed text-dark/50">
               Practice with ₹10L in virtual money and real NSE prices, and build the confidence to
               invest — one WhatsApp conversation at a time, guided by Nova.
