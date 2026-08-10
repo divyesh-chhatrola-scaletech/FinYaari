@@ -79,7 +79,7 @@ function PortfolioCard({ updated }) {
             <p className="text-[11px] font-medium text-dark/50 mb-1">Total Value</p>
             <div className="flex items-center gap-2">
               <span className="text-[22px] font-bold text-dark">
-                ₹{updated ? '10,230' : '10,000'}
+                ₹{updated ? '10,23,000' : '10,00,000'}
               </span>
               {updated && (
                 <motion.span 
@@ -125,6 +125,7 @@ function ExperienceNotification() {
 
 export default function InteractiveDemo() {
   const [step, setStep] = useState(0);
+  const [choice, setChoice] = useState(null);
 
   // Auto-progress first step
   useEffect(() => {
@@ -132,16 +133,17 @@ export default function InteractiveDemo() {
     return () => clearTimeout(t);
   }, []);
 
-  const handleExplain = () => {
+  const handleAnswer = (kind) => {
     if (step >= 2) return;
-    setStep(2); // User clicks Explain
+    setChoice(kind);
+    setStep(2); // User picks an option
     setTimeout(() => setStep(3), 500); // User message appears, Nova starts typing
     setTimeout(() => setStep(4), 2000); // Nova finishes typing, sends message
     setTimeout(() => setStep(5), 3200); // Portfolio updates, XP appears
   };
 
   return (
-    <section className="relative overflow-hidden bg-white py-24 md:py-32">
+    <section id="learning" className="relative overflow-hidden bg-white py-24 md:py-32">
       {/* Very subtle background styling */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden flex items-center justify-center">
         <div className="h-[600px] w-[600px] rounded-full bg-[#25D366]/5 blur-[120px] mix-blend-multiply" />
@@ -159,7 +161,7 @@ export default function InteractiveDemo() {
           >
             <SectionHeading
               className="mb-8"
-              eyebrow="Experience FinYaari"
+              eyebrow="Real WhatsApp learning"
               title="Your first investing lesson starts with one message."
               subtitle="No long videos. No complicated charts. Just a simple conversation with Nova that helps you understand the market one lesson at a time."
               align="left"
@@ -229,26 +231,21 @@ export default function InteractiveDemo() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
-                    className="flex flex-col gap-2 pt-2 ml-auto w-fit items-end"
+                    className="flex gap-2 pt-2 ml-auto w-fit items-end"
                   >
-                    <button onClick={handleExplain} className="rounded-full bg-white px-5 py-2.5 text-[14px] font-bold text-primary shadow-sm hover:bg-primary/5 active:scale-95 transition-all">
+                    <button onClick={() => handleAnswer('explain')} className="rounded-full bg-white px-5 py-2.5 text-[14px] font-bold text-primary shadow-sm hover:bg-primary/5 active:scale-95 transition-all">
                       Explain
                     </button>
-                    <div className="flex gap-2">
-                      <button className="rounded-full bg-white px-4 py-2 text-[13px] font-medium text-dark/60 shadow-sm hover:bg-dark/5 transition-colors">
-                        Skip
-                      </button>
-                      <button className="rounded-full bg-white px-4 py-2 text-[13px] font-medium text-dark/60 shadow-sm hover:bg-dark/5 transition-colors">
-                        Show Chart
-                      </button>
-                    </div>
+                    <button onClick={() => handleAnswer('guess')} className="rounded-full bg-white px-5 py-2.5 text-[14px] font-bold text-dark/70 shadow-sm hover:bg-dark/5 active:scale-95 transition-all">
+                      I'll Guess
+                    </button>
                   </motion.div>
                 )}
               </AnimatePresence>
 
               <AnimatePresence>
                 {step >= 2 && (
-                  <MessageBubble text="Explain" isUser={true} />
+                  <MessageBubble text={choice === 'guess' ? "I'll guess 🤔" : 'Explain please'} isUser={true} />
                 )}
               </AnimatePresence>
 
@@ -266,9 +263,13 @@ export default function InteractiveDemo() {
 
               <AnimatePresence>
                 {step >= 4 && (
-                  <MessageBubble 
-                    text={"Because the company reported stronger quarterly earnings yesterday.\n\nLet's see how this affects your virtual portfolio."} 
-                    isUser={false} 
+                  <MessageBubble
+                    text={
+                      choice === 'guess'
+                        ? "Good instinct! 👏 It's because the company reported stronger quarterly earnings yesterday.\n\nLet's see how this moves your virtual portfolio."
+                        : "Because the company reported stronger quarterly earnings yesterday.\n\nLet's see how this moves your virtual portfolio."
+                    }
+                    isUser={false}
                   />
                 )}
               </AnimatePresence>

@@ -5,11 +5,11 @@ import { cn } from '../lib/utils';
 import Button from './ui/Button';
 
 const NAV_LINKS = [
-  { name: 'Home', href: '#home', id: 'home' },
-  { name: 'How It Works', href: '#how-it-works', id: 'how-it-works' },
-  { name: 'Features', href: '#features', id: 'features' },
-  { name: 'Learning', href: '#learning', id: 'learning' },
   { name: 'Why FinYaari', href: '#why-finyaari', id: 'why-finyaari' },
+  { name: 'How It Works', href: '#how-it-works', id: 'how-it-works' },
+  { name: 'Journey', href: '#journey', id: 'journey' },
+  { name: 'Meet Nova', href: '#nova', id: 'nova' },
+  { name: 'FAQ', href: '#faq', id: 'faq' },
 ];
 
 export default function Navbar() {
@@ -67,16 +67,13 @@ export default function Navbar() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className={cn(
-            'pointer-events-auto flex w-full items-center justify-between rounded-full p-2 pl-5 pr-2 transition-all duration-500 ease-out',
-            scrolled ? 'glass max-w-5xl bg-white/70 shadow-premium' : 'max-w-6xl bg-transparent'
+            'pointer-events-auto flex w-full items-center justify-between rounded-full p-2 pl-[30px] pr-[18px] transition-all duration-500 ease-out',
+            scrolled ? 'glass max-w-[1440px] bg-white/70 shadow-premium' : 'max-w-[1440px] bg-transparent'
           )}
         >
           {/* logo */}
           <a href="#home" className="group flex items-center gap-2 rounded-full" aria-label="FinYaari home">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-white shadow-sm transition-transform duration-300 group-hover:rotate-3 group-hover:scale-105">
-              <MessageCircle size={20} fill="currentColor" />
-            </div>
-            <span className="text-lg font-bold tracking-tight text-dark">FinYaari</span>
+            <img src="/logo-dark.svg" alt="FinYaari" className="h-[4.5rem] w-auto transition-transform duration-300 group-hover:scale-105" />
           </a>
 
           {/* desktop menu */}
@@ -107,11 +104,8 @@ export default function Navbar() {
 
           {/* right actions */}
           <div className="flex items-center gap-2">
-            <a href="#" className="hidden rounded-full px-4 py-2 text-sm font-semibold text-dark/60 transition-colors hover:text-dark md:block">
-              Login
-            </a>
             <Button as="a" href="#" size="sm" variant="dark" className="hidden md:inline-flex">
-              Start on WhatsApp
+              Start Learning on WhatsApp
             </Button>
 
             {/* mobile toggle */}
@@ -167,7 +161,7 @@ export default function Navbar() {
                 ))}
                 <div className="mt-2 border-t border-dark/5 pt-3">
                   <Button as="a" href="#" size="md" variant="primary" icon={MessageCircle} trailing className="w-full" onClick={() => setOpen(false)}>
-                    Start on WhatsApp
+                    Start Learning on WhatsApp
                   </Button>
                 </div>
               </nav>

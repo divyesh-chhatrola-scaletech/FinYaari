@@ -15,6 +15,7 @@ import {
   ShieldCheck,
   Wallet,
   Check,
+  Play,
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 
@@ -126,8 +127,8 @@ function Particles({ count = 18 }) {
 const GOALS = [
   {
     id: 'wealth',
-    label: 'Build Wealth',
-    reply: 'Amazing! 🚀 Let’s grow a portfolio that compounds with you — I’ll fund your account with virtual cash to start.',
+    label: 'Build Confidence',
+    reply: 'Love it! 🌱 Let’s build it step by step — I’ll set you up with ₹10L in virtual money to practise, risk-free.',
   },
   {
     id: 'learn',
@@ -251,8 +252,8 @@ function WhatsAppMock() {
                     isChosen
                       ? 'bg-[#25D366] text-white shadow-glow'
                       : answered
-                      ? 'bg-[#eef4f1] text-[#075E54]/40'
-                      : 'bg-[#E7F3EF] text-[#075E54] hover:bg-[#25D366] hover:text-white active:scale-[0.97] cursor-pointer'
+                        ? 'bg-[#eef4f1] text-[#075E54]/40'
+                        : 'bg-[#E7F3EF] text-[#075E54] hover:bg-[#25D366] hover:text-white active:scale-[0.97] cursor-pointer'
                   )}
                 >
                   {g.label}
@@ -291,7 +292,7 @@ function WhatsAppMock() {
           </span>
           <span className="rounded-full bg-white/15 px-2 py-0.5 text-[10px] font-bold">FUNDED</span>
         </div>
-        <p className="mt-1 text-2xl font-bold tracking-tight">₹10,000.00</p>
+        <p className="mt-1 text-2xl font-bold tracking-tight">₹10,00,000</p>
         <div className="mt-1.5">
           <Sparkline width={210} height={34} color="#7CF5B3" strokeWidth={2} />
         </div>
@@ -313,11 +314,8 @@ function WhatsAppMock() {
         <div className="leading-tight">
           <div className="flex items-center gap-1.5">
             <h4 className="text-[15px] font-semibold">Nova</h4>
-            <span className="rounded bg-white/15 px-1.5 py-px text-[9px] font-bold uppercase tracking-wide">
-              AI
-            </span>
           </div>
-          <p className="text-[11px] text-white/75">online • Finance Companion</p>
+          <p className="text-[11px] text-white/75">online • your finance friend</p>
         </div>
       </div>
 
@@ -361,7 +359,7 @@ function WhatsAppMock() {
           <MessageCircle size={17} className="fill-white" />
         </div>
       </div>
-      
+
       {/* Reset button for demo purposes */}
       {answered && !typing && messages.length > 5 && (
         <button onClick={resetConvo} className="absolute bottom-16 right-4 bg-white shadow-lg rounded-full px-4 py-1.5 text-xs font-bold text-dark hover:bg-gray-50 z-50 transition-all">
@@ -448,7 +446,7 @@ export default function Hero() {
                 </span>
               </span>
               <span className="text-[13px] font-semibold text-dark/80">
-                Meet Nova — your AI Finance Companion
+                FinYaari — Your Personal Finance Friend
               </span>
             </motion.div>
 
@@ -485,9 +483,9 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-8 max-w-[500px] text-[19px] leading-relaxed text-dark/65 font-medium text-balance"
+              className="mt-8 max-w-[520px] text-[19px] leading-relaxed text-dark/65 font-medium text-balance"
             >
-              Practice with virtual money. Learn from real market movements. Build the confidence to invest—one conversation at a time with Nova.
+              Learn investing through real market practice with virtual money. FinYaari helps first-time investors build confidence—guided by Nova on WhatsApp.
             </motion.p>
 
             <motion.div
@@ -499,10 +497,17 @@ export default function Hero() {
               <button className="group relative flex h-14 items-center gap-3 overflow-hidden rounded-full bg-primary pl-6 pr-5 text-white shadow-glow transition-all hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(37,211,102,0.4)] hover:bg-accent active:translate-y-0">
                 <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
                 <MessageCircle size={20} className="fill-white" />
-                <span className="text-[16px] font-bold">Start on WhatsApp</span>
+                <span className="text-[16px] font-bold">Start Learning on WhatsApp</span>
                 <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 transition-transform group-hover:translate-x-1">
                   <ArrowRight size={16} />
                 </span>
+              </button>
+
+              <button className="group flex h-14 items-center gap-2.5 rounded-full border border-dark/10 bg-white/70 px-6 font-bold text-dark shadow-sm backdrop-blur-md transition-all hover:-translate-y-1 hover:border-primary/30 hover:text-emerald active:translate-y-0">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+                  <Play size={15} className="ml-0.5 fill-current" />
+                </span>
+                <span className="text-[16px]">Watch Demo</span>
               </button>
             </motion.div>
 
@@ -545,7 +550,7 @@ export default function Hero() {
                   <div className="absolute -left-[4px] top-[130px] h-10 w-[4px] rounded-l bg-[#2a3140]" />
                   <div className="absolute -left-[4px] top-[180px] h-16 w-[4px] rounded-l bg-[#2a3140]" />
                   <div className="absolute -right-[4px] top-[160px] h-24 w-[4px] rounded-r bg-[#2a3140]" />
-                  
+
                   {/* screen */}
                   <div className="relative h-full w-full overflow-hidden rounded-[46px] bg-white">
                     {/* dynamic island */}
@@ -557,7 +562,7 @@ export default function Hero() {
             </motion.div>
 
             {/* ---- Floating Elements (Strictly 3, strictly outside phone) ---- */}
-            
+
             {/* 1. Portfolio Card (Top Left) */}
             <Parallax
               sx={sx}
@@ -572,9 +577,9 @@ export default function Hero() {
                 </div>
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-wider text-dark/45">
-                    Portfolio
+                    Practice
                   </p>
-                  <p className="text-lg font-bold text-dark">₹10,842</p>
+                  <p className="text-lg font-bold text-dark">₹10L</p>
                 </div>
               </div>
             </Parallax>

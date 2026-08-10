@@ -103,7 +103,7 @@ export default function CTA() {
 
           <FloatChip mx={smx} my={smy} depth={62} delay={0.25} className="right-[5%] top-[22%]">
             <div className="rounded-2xl rounded-tl-md bg-white px-4 py-2.5 text-left shadow-float-card">
-              <p className="text-[13px] font-medium text-gray-800">₹10,000 credited 🎉</p>
+              <p className="text-[13px] font-medium text-gray-800">₹10L credited 🎉</p>
             </div>
           </FloatChip>
 
@@ -136,13 +136,13 @@ export default function CTA() {
             </motion.div>
 
             <h2 className="text-balance text-4xl font-bold leading-[1.05] tracking-tight text-white md:text-[4.5rem]">
-              Your first investment
+              Start your investing journey
               <br />
-              starts with <span className="italic">hello.</span>
+              with <span className="italic">confidence.</span>
             </h2>
 
             <p className="mx-auto mt-6 max-w-xl text-lg font-medium leading-relaxed text-white/70">
-              Message Nova on WhatsApp and get a virtual portfolio in seconds. No apps, no forms, no risk — just your first confident step.
+              Practice first. Invest later. Say hello to Nova on WhatsApp and take your first confident step — no apps, no forms, no risk.
             </p>
 
             {/* typing cue */}
@@ -163,7 +163,7 @@ export default function CTA() {
             <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Magnetic>
                 <Button as="a" href="#" variant="white" size="md" icon={MessageCircle} trailing className="text-[16px]">
-                  Start on WhatsApp
+                  Start Learning on WhatsApp
                 </Button>
               </Magnetic>
               <Button

@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion';
-import { MessageCircle } from 'lucide-react';
 
 const NAV = [
-  { name: 'How It Works', href: '#how-it-works' },
-  { name: 'Learning', href: '#learning' },
-  { name: 'Your Journey', href: '#goals' },
   { name: 'Why FinYaari', href: '#why-finyaari' },
+  { name: 'How It Works', href: '#how-it-works' },
+  { name: 'Meet Nova', href: '#nova' },
+  { name: 'Your Journey', href: '#journey' },
+  { name: 'FAQ', href: '#faq' },
 ];
 
 const SOCIALS = [
@@ -40,14 +40,14 @@ export default function Footer() {
           {/* brand + mission */}
           <div className="max-w-sm">
             <div className="flex items-center gap-2.5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-white shadow-sm">
-                <MessageCircle size={18} fill="currentColor" />
-              </div>
-              <span className="text-lg font-bold tracking-tight text-dark">FinYaari</span>
+              <img src="/logo-dark.svg" alt="FinYaari" className="h-[4.5rem] w-auto" />
             </div>
-            <p className="mt-6 text-[15px] font-medium leading-relaxed text-dark/50">
-              Investing, made fearless. Practice with virtual money and real market prices —
-              guided by Nova, your AI finance companion.
+            <p className="mt-4 text-[13px] font-bold uppercase tracking-[0.2em] text-emerald">
+              Your Personal Finance Friend
+            </p>
+            <p className="mt-4 text-[15px] font-medium leading-relaxed text-dark/50">
+              Practice with ₹10L in virtual money and real NSE prices, and build the confidence to
+              invest — one WhatsApp conversation at a time, guided by Nova.
             </p>
           </div>
 

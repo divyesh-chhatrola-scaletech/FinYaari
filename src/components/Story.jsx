@@ -69,7 +69,7 @@ export default function Story() {
   const novaY = useTransform(progress, [0.78, 0.96], [50, 0]);
 
   return (
-    <section id="why-finyaari" ref={ref} className="relative h-[540vh]">
+    <section id="why" ref={ref} className="relative h-[540vh]">
       <motion.div
         style={{ backgroundColor: bg }}
         className="sticky top-0 flex h-screen items-center justify-center overflow-hidden"
@@ -128,12 +128,12 @@ export default function Story() {
             Let’s learn together.
           </h3>
           <p className="mt-6 max-w-md text-lg font-medium text-white/60">
-            No fear. No jargon. Just you and your AI Finance Companion — one message at a time.
+            No fear. No jargon. Just you and Nova, your finance friend — one message at a time.
           </p>
 
           <button className="group mt-10 flex h-14 items-center gap-3 rounded-full bg-white pl-6 pr-5 font-bold text-dark shadow-glow transition-all hover:-translate-y-1">
             <MessageCircle size={20} className="fill-primary text-primary" />
-            <span className="text-[16px]">Start on WhatsApp</span>
+            <span className="text-[16px]">Start Learning on WhatsApp</span>
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white transition-transform group-hover:translate-x-1">
               <ArrowRight size={16} />
             </span>

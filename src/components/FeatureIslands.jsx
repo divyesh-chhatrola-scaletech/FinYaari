@@ -17,33 +17,12 @@ import {
   Check,
 } from 'lucide-react';
 import { cn } from '../lib/utils';
+import useCountUp from '../hooks/useCountUp';
 import SectionHeading from './ui/SectionHeading';
 
 /* -------------------------------------------------------------------------- */
 /*  helpers                                                                    */
 /* -------------------------------------------------------------------------- */
-const easeOut = (p) => 1 - Math.pow(1 - p, 3);
-
-function useCountUp(to, active, dur = 1100) {
-  const [v, setV] = useState(0);
-  useEffect(() => {
-    if (!active) {
-      setV(0);
-      return;
-    }
-    let raf;
-    const start = performance.now();
-    const tick = (t) => {
-      const p = Math.min(1, (t - start) / dur);
-      setV(Math.round(easeOut(p) * to));
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [to, active, dur]);
-  return v;
-}
-
 function MiniSpark({ data, color = '#25D366', w = 120, h = 34 }) {
   if (data.length < 2) return <svg width={w} height={h} />;
   const max = Math.max(...data);
@@ -64,15 +43,15 @@ function MiniSpark({ data, color = '#25D366', w = 120, h = 34 }) {
 /*  Micro-interaction demos (mounted only while an island is active)          */
 /* -------------------------------------------------------------------------- */
 function PriceDemo({ active }) {
-  const [price, setPrice] = useState(189.42);
+  const [price, setPrice] = useState(2945.6);
   const [dir, setDir] = useState(1);
-  const [hist, setHist] = useState([188, 188.6, 189, 189.42]);
+  const [hist, setHist] = useState([2932, 2938.4, 2941, 2945.6]);
   useEffect(() => {
     if (!active) return;
     const id = setInterval(() => {
       setPrice((prev) => {
-        const delta = (Math.random() - 0.45) * 0.9;
-        const np = Math.max(150, prev + delta);
+        const delta = (Math.random() - 0.45) * 6;
+        const np = Math.max(2850, prev + delta);
         setDir(delta >= 0 ? 1 : -1);
         setHist((h) => [...h.slice(-16), np]);
         return +np.toFixed(2);
@@ -85,12 +64,12 @@ function PriceDemo({ active }) {
     <div>
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-[13px] font-bold text-dark">AAPL</p>
-          <p className="text-[11px] text-dark/40">Apple Inc.</p>
+          <p className="text-[13px] font-bold text-dark">RELIANCE</p>
+          <p className="text-[11px] text-dark/40">NSE • Reliance Industries</p>
         </div>
         <div className="text-right">
           <motion.p key={price} initial={{ y: up ? 6 : -6, opacity: 0.4 }} animate={{ y: 0, opacity: 1 }} className={cn('text-[15px] font-bold', up ? 'text-primary' : 'text-red-500')}>
-            ${price.toFixed(2)}
+            ₹{price.toFixed(2)}
           </motion.p>
           <p className={cn('text-[11px] font-bold', up ? 'text-primary' : 'text-red-500')}>
             {up ? '▲' : '▼'} live
@@ -105,7 +84,7 @@ function PriceDemo({ active }) {
 }
 
 function PortfolioDemo({ active }) {
-  const val = useCountUp(10842, active);
+  const val = useCountUp(1000000, active);
   const alloc = [
     { c: '#25D366', w: 55 },
     { c: '#3B82F6', w: 30 },
@@ -115,10 +94,10 @@ function PortfolioDemo({ active }) {
     <div>
       <div className="flex items-end justify-between">
         <div>
-          <p className="text-[11px] font-bold uppercase tracking-wider text-dark/40">Net worth</p>
+          <p className="text-[11px] font-bold uppercase tracking-wider text-dark/40">Practice value</p>
           <p className="text-[22px] font-bold tracking-tight text-dark">₹{val.toLocaleString('en-IN')}</p>
         </div>
-        <span className="rounded-full bg-primary/15 px-2 py-1 text-[12px] font-bold text-emerald">+8.42%</span>
+        <span className="rounded-full bg-primary/15 px-2 py-1 text-[12px] font-bold text-emerald">Virtual</span>
       </div>
       <div className="mt-3 flex h-2.5 w-full overflow-hidden rounded-full bg-dark/5">
         {alloc.map((a, i) => (
@@ -156,7 +135,7 @@ function AIDemo({ active }) {
   return (
     <div className="space-y-2">
       <div className="ml-auto w-fit max-w-[85%] rounded-2xl rounded-tr-md bg-primary px-3 py-1.5 text-[12.5px] font-medium text-white">
-        Should I buy TSLA? 🤔
+        Should I buy TCS? 🤔
       </div>
       <AnimatePresence mode="wait">
         {step === 1 && (
@@ -168,7 +147,7 @@ function AIDemo({ active }) {
         )}
         {step === 2 && (
           <motion.div key="msg" initial={{ opacity: 0, y: 8, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} className="w-fit max-w-[90%] rounded-2xl rounded-tl-md bg-white px-3 py-1.5 text-[12.5px] text-gray-800 shadow-sm">
-            Let’s check its fundamentals first 👀
+            No tips from me 😊 — but let’s learn to read it together 👀
           </motion.div>
         )}
       </AnimatePresence>
@@ -250,9 +229,9 @@ function RiskDemo({ active }) {
 const FEATURES = [
   {
     id: 'rmp',
-    title: 'Real Market Prices',
-    teaser: 'Live, real data',
-    desc: 'Real stocks and indices moving in real time — the exact data the pros watch, right inside your chat.',
+    title: 'Real NSE Prices',
+    teaser: 'Live NSE data',
+    desc: 'Learn on real NSE stocks and indices moving in real time — the exact prices the market runs on.',
     icon: LineChart,
     accent: '#25D366',
     pos: { x: 17, y: 6 },
@@ -262,9 +241,9 @@ const FEATURES = [
   },
   {
     id: 'vp',
-    title: 'Virtual Portfolio',
-    teaser: '₹10,000 to invest',
-    desc: 'A portfolio funded with ₹10,000 in virtual cash. Build positions, track gains, and watch it grow.',
+    title: 'Virtual Money',
+    teaser: '₹10L to practise',
+    desc: 'A practice portfolio funded with ₹10L in virtual cash. Build positions and learn how it all works.',
     icon: Wallet,
     accent: '#14B8A6',
     pos: { x: 65, y: 4 },
@@ -273,10 +252,10 @@ const FEATURES = [
     Demo: PortfolioDemo,
   },
   {
-    id: 'ai',
-    title: 'AI Guidance',
-    teaser: 'Nova, on demand',
-    desc: 'Nova explains every move in plain language and answers anything — a finance mentor in your pocket.',
+    id: 'nova',
+    title: 'Guided by Nova',
+    teaser: 'Your finance friend',
+    desc: 'Nova explains every move in plain language and answers anything — a patient guide, never a tip machine.',
     icon: Sparkles,
     accent: '#0E9F6E',
     pos: { x: 42, y: 40 },
@@ -287,9 +266,9 @@ const FEATURES = [
   },
   {
     id: 'dl',
-    title: 'Daily Learning',
-    teaser: 'Bite-sized lessons',
-    desc: 'One fresh 2-minute lesson a day. Keep your streak alive and level up without the overwhelm.',
+    title: 'WhatsApp Learning',
+    teaser: 'Right in your chat',
+    desc: 'Bite-sized 2-minute lessons, right where you already are. Keep your streak alive without the overwhelm.',
     icon: BookOpen,
     accent: '#F59E0B',
     pos: { x: 13, y: 66 },
@@ -430,7 +409,7 @@ export default function FeatureIslands() {
   const connectors = useMemo(() => FEATURES.filter((f) => !f.hub).map((f) => ({ id: f.id, from: hub.pos, to: f.pos })), [hub]);
 
   return (
-    <section id="features" className="relative overflow-hidden bg-background py-24 md:py-32">
+    <section id="trust" className="relative overflow-hidden bg-background py-24 md:py-32">
       {/* floating background */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute left-[6%] top-[14%] h-[380px] w-[380px] animate-aurora rounded-full bg-primary/15 blur-[140px]" />
@@ -441,8 +420,8 @@ export default function FeatureIslands() {
       <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6">
         <SectionHeading
           className="mb-14 md:mb-20"
-          eyebrow="Everything you get"
-          title={<>Five ways FinYaari <br className="hidden md:block" /><span className="text-gradient">grows you.</span></>}
+          eyebrow="Why people trust FinYaari"
+          title={<>Five reasons beginners <br className="hidden md:block" /><span className="text-gradient">feel safe here.</span></>}
           subtitle={isMobile ? 'Tap an island to see it in action.' : 'Hover an island to see it come alive.'}
         />
 

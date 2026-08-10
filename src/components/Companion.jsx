@@ -311,7 +311,7 @@ function ChatPanel({ onSpeakingChange }) {
           <div className="flex items-center gap-2">
             <h4 className="text-[15px] font-bold text-dark">Nova</h4>
             <span className="rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-emerald">
-              AI Companion
+              Your guide
             </span>
           </div>
           <p className="text-[12px] font-medium text-dark/45">
@@ -406,7 +406,7 @@ export default function Companion() {
 
   return (
     <section
-      id="learning"
+      id="nova"
       className="relative overflow-hidden bg-gradient-to-b from-white via-background to-background py-28 md:py-36"
     >
       {/* background glows */}
@@ -427,9 +427,9 @@ export default function Companion() {
       <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6">
         <SectionHeading
           className="mb-16"
-          eyebrow="Meet your companion"
-          title={<>Investing, explained by <span className="text-gradient">Nova.</span></>}
-          subtitle="Ask anything, anytime. Nova talks you through every decision in plain language — and shows you the “why” behind it."
+          eyebrow="Meet Nova"
+          title={<>Your investing guide, <span className="text-gradient">inside WhatsApp.</span></>}
+          subtitle="Nova explains investing the way a smart friend would — simple, patient, and encouraging. Never judgmental, never overwhelming."
         />
 
         {/* showcase */}
@@ -445,7 +445,7 @@ export default function Companion() {
             <NovaOrb speaking={speaking} />
             <h3 className="mt-9 text-2xl font-bold tracking-tight text-dark">Nova</h3>
             <p className="mt-1 text-[14px] font-semibold uppercase tracking-[0.25em] text-emerald">
-              AI Finance Companion
+              Your Investing Guide
             </p>
 
             {/* voice waveform */}
