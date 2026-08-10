@@ -8,6 +8,9 @@ import {
   Wallet,
   LineChart,
   ArrowRight,
+  Orbit,
+  Activity,
+  Atom,
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import SectionHeading from './ui/SectionHeading';
@@ -15,58 +18,138 @@ import SectionHeading from './ui/SectionHeading';
 /* -------------------------------------------------------------------------- */
 /*  Nova avatar — an abstract, premium "AI presence" orb (no robot)           */
 /* -------------------------------------------------------------------------- */
-function NovaOrb({ speaking, size = 176 }) {
+function NovaOrb({ speaking, size = 130 }) {
   return (
-    <div className="relative" style={{ width: size, height: size }}>
-      {/* pulse rings */}
-      <span className="absolute inset-0 animate-pulse-ring rounded-full bg-primary/30" />
-      <span
-        className="absolute inset-0 animate-pulse-ring rounded-full bg-emerald/30"
-        style={{ animationDelay: '1.2s' }}
-      />
-
-      {/* rotating conic aura */}
-      <div
-        className="absolute inset-0 animate-spin-slow rounded-full opacity-80 blur-md"
-        style={{
-          background:
-            'conic-gradient(from 0deg, #7CF5B3, #25D366, #0E9F6E, #075E54, #25D366, #7CF5B3)',
-        }}
-      />
-
-      {/* liquid core */}
+    <motion.div
+      className="group relative flex cursor-default items-center justify-center"
+      style={{ width: size, height: size }}
+      whileHover={{ y: -4 }}
+      animate={{ scale: speaking ? [0.98, 1.04, 0.98] : [0.98, 1.01, 0.98] }}
+      transition={{
+        y: { type: 'spring', stiffness: 300, damping: 20 },
+        scale: { duration: speaking ? 1.5 : 4, repeat: Infinity, ease: 'easeInOut' },
+      }}
+    >
+      {/* 1. Large soft radial glow behind avatar */}
       <motion.div
-        animate={{ scale: speaking ? [1, 1.06, 0.98, 1.04, 1] : [1, 1.03, 1] }}
-        transition={{ duration: speaking ? 1.1 : 3.5, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute inset-[10%] overflow-hidden rounded-full shadow-glow"
+        className="absolute rounded-full"
         style={{
-          background: 'radial-gradient(circle at 32% 28%, #9dfbc4 0%, #25D366 42%, #0b7a53 100%)',
+          width: size * 1.8,
+          height: size * 1.8,
+          background: 'radial-gradient(circle, rgba(46,204,113,0.18) 0%, rgba(46,204,113,0) 70%)',
+          boxShadow: '0 30px 80px rgba(46,204,113,0.22)',
+          zIndex: 0,
         }}
+        animate={{ opacity: speaking ? 1 : 0.4 }}
+        transition={{ duration: 1 }}
+      />
+
+      {/* 2. Outer Glass Ring */}
+      <motion.div
+        className="absolute inset-0 rounded-full border border-white/50 bg-white/10 shadow-[inset_0_0_20px_rgba(255,255,255,0.5)] backdrop-blur-md transition-all group-hover:bg-white/20"
+        animate={{ rotate: speaking ? 360 : 360 }}
+        transition={{ duration: speaking ? 6 : 20, repeat: Infinity, ease: 'linear' }}
+        style={{ zIndex: 1 }}
       >
-        {/* inner moving highlights */}
-        <motion.div
-          animate={{ x: [-20, 20, -20], y: [-10, 15, -10] }}
-          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute left-1/4 top-1/4 h-1/2 w-1/2 rounded-full bg-white/50 blur-2xl"
-        />
-        <motion.div
-          animate={{ x: [15, -15, 15], y: [10, -12, 10] }}
-          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute bottom-1/4 right-1/4 h-1/3 w-1/3 rounded-full bg-emerald/70 blur-xl"
-        />
-        {/* specular */}
-        <div className="absolute left-[22%] top-[16%] h-3 w-8 -rotate-45 rounded-full bg-white/70 blur-[2px]" />
-        <Sparkles size={size * 0.16} className="absolute inset-0 m-auto text-white/70" />
+        {/* Subtle glass reflection highlight */}
+        <div className="absolute left-1/2 top-0 h-[30%] w-[70%] -translate-x-1/2 rounded-full bg-gradient-to-b from-white/70 to-transparent blur-[2px]" />
       </motion.div>
 
-      {/* orbiting particles */}
-      <div className="absolute inset-0 animate-spin-slow">
-        <span className="absolute left-1/2 top-0 h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-white shadow-glow" />
+      {/* 3. Animated Energy Ring (conic gradient border) */}
+      <motion.div
+        className="absolute inset-[2px] rounded-full"
+        style={{
+          padding: '2px',
+          background: 'linear-gradient(to bottom, transparent, transparent)', // Inner bg placeholder
+          WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+          WebkitMaskComposite: 'xor',
+          maskComposite: 'exclude',
+          zIndex: 2,
+        }}
+      >
+        <motion.div
+          className="absolute inset-0 rounded-full"
+          style={{ background: 'conic-gradient(from 0deg, #7CF5B3, #25D366, #0E9F6E, #7CF5B3)' }}
+          animate={{ rotate: speaking ? -360 : -360 }}
+          transition={{ duration: speaking ? 3 : 12, repeat: Infinity, ease: 'linear' }}
+        />
+      </motion.div>
+
+      {/* Speaking Ripple Effect */}
+      {speaking && (
+        <motion.div
+          className="absolute inset-0 rounded-full border-2 border-emerald/40"
+          animate={{ scale: [1, 1.3, 1.3], opacity: [0.8, 0, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: 'easeOut' }}
+          style={{ zIndex: 1 }}
+        />
+      )}
+
+      {/* 4. Inner AI Core */}
+      <motion.div
+        className="absolute overflow-hidden rounded-full shadow-[inset_0_-8px_20px_rgba(0,0,0,0.15)]"
+        style={{
+          inset: '14%',
+          background: 'radial-gradient(circle at 35% 35%, #a7f3d0 0%, #34d399 45%, #059669 85%, #064e3b 100%)',
+          zIndex: 3,
+        }}
+        animate={{ opacity: speaking ? [0.8, 1, 0.8] : 0.9 }}
+        transition={{ duration: speaking ? 1.5 : 4, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        {/* Core dynamic highlights */}
+        <motion.div
+          animate={{ x: [-15, 15, -15], y: [-10, 15, -10] }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute left-[15%] top-[15%] h-[60%] w-[60%] rounded-full bg-white/40 blur-xl"
+        />
+      </motion.div>
+
+      {/* 5. Floating Particle Layer */}
+      <div className="absolute inset-0" style={{ zIndex: 4 }}>
+        {[...Array(6)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute left-1/2 top-1/2 h-1 w-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white shadow-[0_0_6px_rgba(255,255,255,0.9)]"
+            initial={{ opacity: 0 }}
+            animate={
+              speaking
+                ? {
+                    x: (Math.random() - 0.5) * size * 1.1,
+                    y: (Math.random() - 0.5) * size * 1.1,
+                    opacity: [0, 1, 0],
+                    scale: [0, 1.5, 0],
+                  }
+                : {
+                    x: Math.sin(i * 1.1) * (size * 0.35),
+                    y: Math.cos(i * 1.1) * (size * 0.35),
+                    opacity: [0.2, 0.8, 0.2],
+                    scale: 1,
+                  }
+            }
+            transition={{
+              duration: speaking ? 1 + Math.random() : 3 + Math.random() * 2,
+              repeat: Infinity,
+              ease: 'easeInOut',
+              delay: Math.random() * 2,
+            }}
+          />
+        ))}
       </div>
-      <div className="absolute inset-0 animate-spin-slow" style={{ animationDirection: 'reverse', animationDuration: '16s' }}>
-        <span className="absolute bottom-1 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-mint shadow-glow" />
-      </div>
-    </div>
+
+      {/* 6. Center AI Symbol */}
+      <motion.div
+        className="relative flex items-center justify-center text-white mix-blend-overlay"
+        style={{ zIndex: 5 }}
+        animate={{ scale: speaking ? [1, 1.15, 1] : 1, opacity: speaking ? 1 : 0.8 }}
+        transition={{ duration: speaking ? 1.5 : 3, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        {speaking ? (
+          <Activity size={size * 0.35} strokeWidth={2.5} className="drop-shadow-md" />
+        ) : (
+          <Orbit size={size * 0.38} strokeWidth={2} className="drop-shadow-md" />
+        )}
+      </motion.div>
+    </motion.div>
   );
 }
 
@@ -409,13 +492,36 @@ export default function Companion() {
       id="nova"
       className="relative overflow-hidden bg-gradient-to-b from-white via-background to-background py-28 md:py-36"
     >
-      {/* background glows */}
+      {/* background glows & dots */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute left-[12%] top-[10%] h-[420px] w-[420px] animate-aurora rounded-full bg-primary/15 blur-[140px]" />
         <div
           className="absolute bottom-[6%] right-[8%] h-[460px] w-[460px] animate-aurora rounded-full bg-emerald/15 blur-[150px]"
           style={{ animationDelay: '5s' }}
         />
+        {/* Tiny floating dots */}
+        <div className="absolute inset-0 opacity-[0.15]">
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={`dot-${i}`}
+              className="absolute h-[3px] w-[3px] rounded-full bg-emerald"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -40, 0],
+                opacity: [0.2, 1, 0.2],
+              }}
+              transition={{
+                duration: 5 + Math.random() * 5,
+                repeat: Infinity,
+                delay: Math.random() * 5,
+                ease: 'easeInOut',
+              }}
+            />
+          ))}
+        </div>
       </div>
 
       {/* floating example bubbles */}

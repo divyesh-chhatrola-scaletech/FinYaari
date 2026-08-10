@@ -7,7 +7,7 @@ import Button from './ui/Button';
 const NAV_LINKS = [
   { name: 'Why FinYaari', href: '#why-finyaari', id: 'why-finyaari' },
   { name: 'How It Works', href: '#how-it-works', id: 'how-it-works' },
-  { name: 'Journey', href: '#journey', id: 'journey' },
+  { name: 'Your Journey', href: '#journey', id: 'journey' },
   { name: 'Meet Nova', href: '#nova', id: 'nova' },
   { name: 'FAQ', href: '#faq', id: 'faq' },
 ];

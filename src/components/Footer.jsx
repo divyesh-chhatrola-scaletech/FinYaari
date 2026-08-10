@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 const NAV = [
   { name: 'Why FinYaari', href: '#why-finyaari' },
   { name: 'How It Works', href: '#how-it-works' },
-  { name: 'Meet Nova', href: '#nova' },
   { name: 'Your Journey', href: '#journey' },
+  { name: 'Meet Nova', href: '#nova' },
   { name: 'FAQ', href: '#faq' },
 ];
 
