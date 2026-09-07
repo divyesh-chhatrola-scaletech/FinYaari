@@ -18,6 +18,7 @@ import {
   Play,
 } from 'lucide-react';
 import { cn } from '../lib/utils';
+import { useWaitlistModal } from '../context/WaitlistModalContext';
 
 /* -------------------------------------------------------------------------- */
 /*  Animated sparkline                                                         */
@@ -387,6 +388,7 @@ function Parallax({ sx, sy, depth = 30, className, floatClass, children }) {
 /*  Hero                                                                       */
 /* -------------------------------------------------------------------------- */
 export default function Hero() {
+  const { openWaitlistModal } = useWaitlistModal();
   const containerRef = useRef(null);
 
   const px = useMotionValue(0);
@@ -478,7 +480,11 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
               className="mt-9 flex flex-col items-start gap-4 sm:flex-row sm:items-center"
             >
-              <button className="group relative flex h-14 items-center gap-3 overflow-hidden rounded-full bg-primary pl-6 pr-5 text-white shadow-glow transition-all hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(37,211,102,0.4)] hover:bg-accent active:translate-y-0">
+              <button
+                type="button"
+                onClick={openWaitlistModal}
+                className="group relative flex h-14 items-center gap-3 overflow-hidden rounded-full bg-primary pl-6 pr-5 text-white shadow-glow transition-all hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(37,211,102,0.4)] hover:bg-accent active:translate-y-0"
+              >
                 <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
                 <MessageCircle size={20} className="fill-white" />
                 <span className="text-[16px] font-bold">Start Learning on WhatsApp</span>

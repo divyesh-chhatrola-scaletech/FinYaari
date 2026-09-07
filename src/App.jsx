@@ -12,27 +12,30 @@ import FeatureIslands from './components/FeatureIslands';
 import FAQ from './components/FAQ';
 import CTA from './components/CTA';
 import Footer from './components/Footer';
+import { WaitlistModalProvider } from './context/WaitlistModalContext';
 
 function App() {
   return (
-    <div className="relative min-h-screen bg-background">
-      <Navbar />
-      <main>
-        <Hero />
-        <Story />
-        <WhyFinYaari />
-        <HowItWorks />
-        <LearningJourney />
-        <Companion />
-        <InteractiveDemo />
-        <LivingConversation />
-        <LearningProgress />
-        <FeatureIslands />
-        <FAQ />
-        <CTA />
-      </main>
-      <Footer />
-    </div>
+    <WaitlistModalProvider>
+      <div className="relative min-h-screen bg-background">
+        <Navbar />
+        <main>
+          <Hero />
+          <Story />
+          <WhyFinYaari />
+          <HowItWorks />
+          <LearningJourney />
+          <Companion />
+          <InteractiveDemo />
+          <LivingConversation />
+          <LearningProgress />
+          <FeatureIslands />
+          <FAQ />
+          <CTA />
+        </main>
+        <Footer />
+      </div>
+    </WaitlistModalProvider>
   );
 }
 
