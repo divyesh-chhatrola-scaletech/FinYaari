@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
-import { CheckCircle2, ChevronDown, Loader2, MessageCircle, X } from 'lucide-react';
-import { COUNTRIES, DEFAULT_COUNTRY } from '../lib/countries';
+import { CheckCircle2, Loader2, MessageCircle, X } from 'lucide-react';
+import { DEFAULT_COUNTRY } from '../lib/countries';
 import { submitToWaitlist, warmUpWaitlistApi, WaitlistApiError } from '../lib/waitlistApi';
 import { cn } from '../lib/utils';
 
@@ -57,10 +57,6 @@ export default function WaitlistModal({ isOpen, onClose }) {
     setState((s) => ({ ...s, number: filtered, error: '' }));
   };
 
-  const handleCountryChange = (e) => {
-    setState((s) => ({ ...s, country: e.target.value, error: '' }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (state.isSubmitting) return;
@@ -79,8 +75,10 @@ export default function WaitlistModal({ isOpen, onClose }) {
 
     setState((s) => ({ ...s, isSubmitting: true, error: '' }));
 
+    const formattedNumber = `+${phoneNumber.countryCallingCode} ${phoneNumber.nationalNumber}`;
+
     try {
-      await submitToWaitlist(phoneNumber.nationalNumber);
+      await submitToWaitlist(formattedNumber);
       setState((s) => ({ ...s, isSubmitting: false, step: 'success' }));
     } catch (err) {
       const message = err instanceof WaitlistApiError ? err.message : 'Something went wrong. Please try again.';
@@ -145,25 +143,16 @@ export default function WaitlistModal({ isOpen, onClose }) {
                     </label>
                     <div
                       className={cn(
-                        'flex items-stretch overflow-hidden rounded-2xl border bg-white transition-colors focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/25',
+                        'flex items-stretch rounded-2xl border bg-white transition-colors focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/25',
                         state.error ? 'border-red-400' : 'border-dark/10'
                       )}
                     >
-                      <div className="relative flex items-center border-r border-dark/10 bg-dark/[0.03]">
-                        <select
-                          aria-label="Country code"
-                          value={state.country}
-                          onChange={handleCountryChange}
-                          disabled={state.isSubmitting}
-                          className="h-full appearance-none bg-transparent py-3.5 pl-4 pr-8 text-[14px] font-semibold text-dark outline-none disabled:opacity-60"
-                        >
-                          {COUNTRIES.map((c) => (
-                            <option key={c.code} value={c.code}>
-                              {c.code} +{c.dialCode}
-                            </option>
-                          ))}
-                        </select>
-                        <ChevronDown size={14} className="pointer-events-none absolute right-2.5 text-dark/40" />
+                      <div
+                        aria-label="Country code: India +91"
+                        className="flex select-none items-center gap-1.5 rounded-l-2xl border-r border-dark/10 bg-dark/[0.03] py-3.5 pl-4 pr-3 text-[14px] font-semibold text-dark/70"
+                      >
+                        <span aria-hidden="true">🇮🇳</span>
+                        <span>IN +91</span>
                       </div>
                       <input
                         id="waitlist-phone"
@@ -176,7 +165,7 @@ export default function WaitlistModal({ isOpen, onClose }) {
                         disabled={state.isSubmitting}
                         aria-invalid={!!state.error}
                         aria-describedby={state.error ? 'waitlist-phone-error' : undefined}
-                        className="h-full flex-1 min-w-0 bg-transparent px-4 py-3.5 text-[15px] font-medium text-dark outline-none placeholder:text-dark/35 disabled:opacity-60"
+                        className="h-full flex-1 min-w-0 rounded-r-2xl bg-transparent px-4 py-3.5 text-[15px] font-medium text-dark outline-none placeholder:text-dark/35 disabled:opacity-60"
                       />
                     </div>
 
