@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import { CheckCircle2, ChevronDown, Loader2, MessageCircle, X } from 'lucide-react';
 import { COUNTRIES, DEFAULT_COUNTRY } from '../lib/countries';
-import { submitToWaitlist, WaitlistApiError } from '../lib/waitlistApi';
+import { submitToWaitlist, warmUpWaitlistApi, WaitlistApiError } from '../lib/waitlistApi';
 import { cn } from '../lib/utils';
 
 const initialState = {
@@ -24,6 +24,8 @@ export default function WaitlistModal({ isOpen, onClose }) {
       const t = setTimeout(() => setState(initialState), 250);
       return () => clearTimeout(t);
     }
+    // Give a sleeping free-tier API a head start before the user hits Submit.
+    warmUpWaitlistApi();
   }, [isOpen]);
 
   useEffect(() => {

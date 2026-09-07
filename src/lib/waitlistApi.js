@@ -25,6 +25,27 @@ function friendlyMessage(message) {
   return message;
 }
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/**
+ * Free-tier hosts like Render spin down the API after inactivity, so the first
+ * request after a while can 502/timeout as it wakes up. Firing this as soon as
+ * the modal opens gives it a head start before the user actually hits Submit.
+ * Failures are ignored on purpose — this is best-effort only.
+ */
+export function warmUpWaitlistApi() {
+  if (!WAITLIST_API_URL) return;
+  fetch(WAITLIST_API_URL, { method: 'OPTIONS' }).catch(() => {});
+}
+
+async function postWaitlist(mobileNumber) {
+  return fetch(WAITLIST_API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ mobile_number: mobileNumber }),
+  });
+}
+
 /**
  * Submits a WhatsApp number (national significant number, e.g. "9876543210")
  * to the waitlist API. Throws WaitlistApiError with a user-friendly message on failure.
@@ -36,13 +57,16 @@ export async function submitToWaitlist(mobileNumber) {
 
   let response;
   try {
-    response = await fetch(WAITLIST_API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ mobile_number: mobileNumber }),
-    });
+    response = await postWaitlist(mobileNumber);
   } catch {
-    throw new WaitlistApiError('Something went wrong. Please try again.');
+    // Likely a cold-start connection drop on a sleeping free-tier host — retry once.
+    try {
+      await sleep(2500);
+      response = await postWaitlist(mobileNumber);
+    } catch (err) {
+      console.error('Waitlist submission failed:', err);
+      throw new WaitlistApiError('Something went wrong. Please try again.');
+    }
   }
 
   let body = null;
