@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Check, CheckCheck, Flame, ArrowRight, TrendingUp } from 'lucide-react';
 import { cn } from '../lib/utils';
 import SectionHeading from './ui/SectionHeading';
+import { useWaitlistModal } from '../context/WaitlistModalContext';
 
 /* -------------------------------------------------------------------------- */
 /*  WhatsApp UI Components                                                     */
@@ -124,6 +125,7 @@ function ExperienceNotification() {
 /* -------------------------------------------------------------------------- */
 
 export default function InteractiveDemo() {
+  const { openWaitlistModal } = useWaitlistModal();
   const [step, setStep] = useState(0);
   const [choice, setChoice] = useState(null);
 
@@ -189,7 +191,9 @@ export default function InteractiveDemo() {
               ))}
             </div>
 
-            <motion.button 
+            <motion.button
+              type="button"
+              onClick={openWaitlistModal}
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.98 }}
               className="group flex h-14 items-center gap-3 rounded-full bg-dark pl-6 pr-5 font-bold text-white shadow-premium transition-all hover:bg-dark/90 hover:shadow-premium-hover"

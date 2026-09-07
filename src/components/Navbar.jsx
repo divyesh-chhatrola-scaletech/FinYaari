@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useScroll } from 'framer-motion';
 import { MessageCircle, Menu, X } from 'lucide-react';
 import { cn } from '../lib/utils';
 import Button from './ui/Button';
+import { useWaitlistModal } from '../context/WaitlistModalContext';
 
 const NAV_LINKS = [
   { name: 'Why FinYaari', href: '#why-finyaari', id: 'why-finyaari' },
@@ -18,6 +19,7 @@ export default function Navbar() {
   const [hovered, setHovered] = useState(null);
   const [open, setOpen] = useState(false);
   const { scrollYProgress } = useScroll();
+  const { openWaitlistModal } = useWaitlistModal();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -104,7 +106,7 @@ export default function Navbar() {
 
           {/* right actions */}
           <div className="flex items-center gap-2">
-            <Button as="a" href="#" size="sm" variant="dark" className="hidden md:inline-flex">
+            <Button as="button" type="button" onClick={openWaitlistModal} size="sm" variant="dark" className="hidden md:inline-flex">
               Start Learning on WhatsApp
             </Button>
 
@@ -160,7 +162,19 @@ export default function Navbar() {
                   </motion.a>
                 ))}
                 <div className="mt-2 border-t border-dark/5 pt-3">
-                  <Button as="a" href="#" size="md" variant="primary" icon={MessageCircle} trailing className="w-full" onClick={() => setOpen(false)}>
+                  <Button
+                    as="button"
+                    type="button"
+                    size="md"
+                    variant="primary"
+                    icon={MessageCircle}
+                    trailing
+                    className="w-full"
+                    onClick={() => {
+                      setOpen(false);
+                      openWaitlistModal();
+                    }}
+                  >
                     Start Learning on WhatsApp
                   </Button>
                 </div>

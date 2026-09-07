@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { MessageCircle, Play, Star, TrendingUp, ShieldCheck } from 'lucide-react';
 import Button from './ui/Button';
+import { useWaitlistModal } from '../context/WaitlistModalContext';
 
 /* magnetic wrapper — the child drifts toward the cursor, then springs back */
 function Magnetic({ children, strength = 0.4 }) {
@@ -47,6 +48,7 @@ function FloatChip({ mx, my, depth, className, children, delay = 0 }) {
 }
 
 export default function CTA() {
+  const { openWaitlistModal } = useWaitlistModal();
   const panelRef = useRef(null);
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
@@ -162,7 +164,16 @@ export default function CTA() {
 
             <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Magnetic>
-                <Button as="a" href="#" variant="white" size="md" icon={MessageCircle} trailing className="text-[16px]">
+                <Button
+                  as="button"
+                  type="button"
+                  onClick={openWaitlistModal}
+                  variant="white"
+                  size="md"
+                  icon={MessageCircle}
+                  trailing
+                  className="text-[16px]"
+                >
                   Start Learning on WhatsApp
                 </Button>
               </Magnetic>
