@@ -7,4 +7,7 @@ export default defineConfig({
   server: {
     allowedHosts: ['recognized-suppose-dig-explicit.trycloudflare.com'],
   },
+  build: {
+    chunkSizeWarningLimit: 1000,
+  }
 })
