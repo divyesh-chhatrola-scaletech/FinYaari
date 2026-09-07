@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { Sparkles, ArrowRight, MessageCircle } from 'lucide-react';
+import { useWaitlistModal } from '../context/WaitlistModalContext';
 
 /* -------------------------------------------------------------------------- */
 /*  A single fear — fades in, holds, then drifts away + blurs out             */
@@ -40,6 +41,7 @@ const FEARS = [
 ];
 
 export default function Story() {
+  const { openWaitlistModal } = useWaitlistModal();
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -131,7 +133,11 @@ export default function Story() {
             No fear. No jargon. Just you and Nova, your finance friend — one message at a time.
           </p>
 
-          <button className="group mt-10 flex h-14 items-center gap-3 rounded-full bg-white pl-6 pr-5 font-bold text-dark shadow-glow transition-all hover:-translate-y-1">
+          <button
+            type="button"
+            onClick={openWaitlistModal}
+            className="group mt-10 flex h-14 items-center gap-3 rounded-full bg-white pl-6 pr-5 font-bold text-dark shadow-glow transition-all hover:-translate-y-1"
+          >
             <MessageCircle size={20} className="fill-primary text-primary" />
             <span className="text-[16px]">Start Learning on WhatsApp</span>
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white transition-transform group-hover:translate-x-1">
